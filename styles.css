@@ -466,6 +466,7 @@ p {
 
 .links {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 8px 12px;
   margin-top: 10px;
@@ -473,8 +474,39 @@ p {
   font-weight: 700;
 }
 
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+}
+
 .links span {
   color: var(--coral);
+}
+
+.links .honor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 30px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fff7d1, #ffe9a8);
+  color: #8b5e00;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.2;
+  box-shadow: 0 8px 18px rgba(180, 140, 15, 0.14);
+}
+
+.links .honor-badge::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c58a00;
+  box-shadow: 0 0 0 4px rgba(197, 138, 0, 0.14);
 }
 
 .tools {
