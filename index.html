@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="Juyoung Oh is an integrated MA/Ph.D student at Seoul National University working on low-power integrated circuits and hardware accelerators for AI and robotics."
+      content="Juyoung Oh is an Ph.D candidate at Seoul National University working on low-power integrated circuits and hardware accelerators for AI and robotics."
     >
     <title>Juyoung Oh</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="static/js/fontawesome.all.min.js"></script>
   </head>
   <body>
-    <header class="topbar">
-      <div class="topbar-inner">
-        <a class="site-name" href="#home">Juyoung Oh</a>
-        <nav aria-label="Primary navigation">
-          <a href="#home">Home</a>
-          <a href="#education">Education</a>
-          <a href="#publications">Publications</a>
-          <a href="#projects">Projects</a>
-          <a href="#awards">Awards</a>
+    <aside class="page-nav" aria-label="Section navigation">
+      <div class="page-nav-card">
+        <p class="page-nav-label">On This Page</p>
+        <nav class="page-nav-links">
+          <a class="page-nav-link active" href="#about">About</a>
+          <a class="page-nav-link" href="#education">Education</a>
+          <a class="page-nav-link" href="#publications">Publications</a>
+          <a class="page-nav-link" href="#projects">Projects</a>
+          <a class="page-nav-link" href="#awards">Awards</a>
+          <a class="page-nav-link" href="#skills">Skills</a>
+          <a class="page-nav-link" href="#technology">Technology</a>
         </nav>
       </div>
-    </header>
+    </aside>
 
     <main class="page" id="home">
       <aside class="profile">
@@ -52,11 +55,15 @@
       </aside>
 
       <div class="content">
-        <section class="section about">
-          <h2>About me</h2>
+        <section class="section about" id="about">
+          <div class="about-heading">
+            <h2>About me</h2>
+            <p class="last-updated">Last updated: April 2026</p>
+          </div>
           <p>
-            I am an integrated MA/Ph.D student at Seoul National University, advised by
-            Prof. Dongsuk Jeon in the Mobile Multimedia Systems Group.
+            I am an Ph.D candidate at Seoul National University, advised by
+            Prof. Dongsuk Jeon in the
+            <a href="https://mms.snu.ac.kr" target="_blank" rel="noopener noreferrer">Mobile Multimedia Systems Group</a>.
           </p>
           <p>
             My research focuses on
@@ -103,8 +110,12 @@
               <img class="school-logo" src="assets/snu_ui.png" alt="Seoul National University logo">
               <div>
                 <h3>Seoul National University <span class="school-location">Seoul, South Korea</span></h3>
-                <p>Integrated MA/Ph.D Course</p>
-                <p>Mobile Multimedia Systems Group</p>
+                <p>Integrated MS/Ph.D Course</p>
+                <p>
+                  <a href="https://mms.snu.ac.kr" target="_blank" rel="noopener noreferrer">
+                  Mobile Multimedia Systems Group
+                  </a>
+                </p>
                 <p>Advisor: Prof. Dongsuk Jeon</p>
               </div>
               <div class="education-meta">
@@ -176,7 +187,10 @@
                 <p class="links">
                   <a href="https://doi.org/10.1109/CICC63670.2025.10983508" target="_blank" rel="noopener noreferrer">paper</a>
                   <a href="assets/RL_CICC25_Slide_url_version.pdf" target="_blank" rel="noopener noreferrer">slides</a>
-                  <span class="honor-badge">Best Student Paper Candidate</span>
+                  <span class="honor-badge">
+                    <i class="fas fa-award" aria-hidden="true"></i>
+                    <span>Best Student Paper Candidate</span>
+                  </span>
                 </p>
               </div>
             </article>
@@ -440,7 +454,7 @@
           </ul>
         </section>
 
-        <section class="section skills-section">
+        <section class="section skills-section" id="skills">
           <h2>Skills</h2>
           <div class="skill-list">
             <article>
@@ -464,7 +478,7 @@
           </div>
         </section>
 
-        <section class="section technology-section">
+        <section class="section technology-section" id="technology">
           <h2>Technology Experience</h2>
           <div class="technology-grid">
             <article>
@@ -480,8 +494,63 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <p>Last updated in April 2026.</p>
-    </footer>
+    <script>
+      const pageNavLinks = Array.from(document.querySelectorAll(".page-nav-link"));
+
+      const setActivePageNavLink = (targetId) => {
+        pageNavLinks.forEach((link) => {
+          link.classList.toggle("active", link.getAttribute("href") === targetId);
+        });
+      };
+
+      const updatePageNavigation = () => {
+        if (!pageNavLinks.length) {
+          return;
+        }
+
+        const currentSection = pageNavLinks.reduce((activeId, link) => {
+          const targetId = link.getAttribute("href");
+          const section = targetId ? document.querySelector(targetId) : null;
+
+          if (!section) {
+            return activeId;
+          }
+
+          if (window.scrollY >= section.offsetTop - 160) {
+            return targetId;
+          }
+
+          return activeId;
+        }, pageNavLinks[0].getAttribute("href"));
+
+        setActivePageNavLink(currentSection);
+      };
+
+      let pageNavTicking = false;
+
+      const requestPageNavUpdate = () => {
+        if (pageNavTicking) {
+          return;
+        }
+
+        pageNavTicking = true;
+
+        window.requestAnimationFrame(() => {
+          updatePageNavigation();
+          pageNavTicking = false;
+        });
+      };
+
+      pageNavLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          setActivePageNavLink(link.getAttribute("href"));
+        });
+      });
+
+      window.addEventListener("scroll", requestPageNavUpdate, { passive: true });
+      window.addEventListener("resize", updatePageNavigation);
+      window.addEventListener("load", updatePageNavigation);
+      updatePageNavigation();
+    </script>
   </body>
 </html>
